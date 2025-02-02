@@ -1,6 +1,10 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
+import Navbar from "./components/Navbar";
+import { ClerkProvider } from "@clerk/nextjs";
+import ConditionalCheckup from "./components/ConditionalCheckup";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -17,12 +21,23 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        suppressHydrationWarning={true}
       >
-        {children}
+        <div className="min-h-screen bg-gradient-to-br from-blue-100 to-indigo-100">
+
+          <ClerkProvider>
+            <ConditionalCheckup>
+              {children}
+            </ConditionalCheckup>
+          </ClerkProvider>
+
+        </div>
+
       </body>
     </html>
   );
